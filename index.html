@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        button { padding: 10px 20px; font-size: 16px; margin: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Admin Portal</h1>
+    <button onclick="startScript('main')">Start Main Bot</button>
+    <button onclick="startScript('gemini')">Start Gemini Bot</button>
+    <div id="status"></div>
+
+    <script>
+        async function startScript(scriptName) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `Starting ${scriptName} bot...`;
+            try {
+                const response = await fetch(`/start/${scriptName}`, { method: 'POST' });
+                const data = await response.text();
+                statusDiv.innerHTML = data;
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.innerHTML = `Error starting ${scriptName} bot.`;
+            }
+        }
+    </script>
+</body>
+</html>
